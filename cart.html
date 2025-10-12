@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | Sushi’s Art</title>
+  <link rel="stylesheet" href="nicepage.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery.js" defer></script>
+  <script src="nicepage.js" defer></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fffdf8;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ffb347, #ffcc33);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 1.4rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 600;
+    }
+
+    nav a:hover { opacity: 0.8; }
+
+    .cart-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 { color: #ff9800; }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .totals {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 1.1rem;
+    }
+
+    .discount {
+      color: green;
+      font-weight: 600;
+    }
+
+    .checkout-btn {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .checkout-btn:hover { background: #e68900; }
+
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #ffcc33;
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Sushi’s Art</h1>
+    <nav>
+      <a href="./">Home</a>
+      <a href="products.html">Shop</a>
+      <a href="cart.html">🛒 Cart</a>
+    </nav>
+  </header>
+
+  <main class="cart-container">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+
+    <div class="totals">
+      <p>Subtotal: ₹<span id="cartSubtotal">0</span></p>
+      <p class="discount" id="discountText"></p>
+      <p><strong>Total: ₹<span id="cartTotal">0</span></strong></p>
+      <button class="checkout-btn" onclick="checkout()">Checkout on WhatsApp</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>Contact us at <a href="mailto:sushis.art@gmail.com">sushis.art@gmail.com</a></p>
+    <p>Follow us: 
+      <a href="https://www.youtube.com/@YourChannelName" target="_blank">YouTube</a> | 
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    </p>
+    <p>&copy; 2025 Sushi’s Art — Handmade with Love in India.</p>
+  </footer>
+
+<script>
+const apiUrl = 'https://script.google.com/macros/s/AKfycbyisIvU_DAG1B5SFgNxjZ6_7d19v4xwA86u4nySdiTDRuTHlehEbXDBf_xqOnku20KJ4w/exec';
+
+async function displayCart() {
+  const cartItemsContainer = document.getElementById('cartItems');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const totalEl = document.getElementById('cartTotal');
+  const discountText = document.getElementById('discountText');
+  cartItemsContainer.innerHTML = '';
+
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  let subtotal = 0;
+
+  try {
+    const response = await fetch(apiUrl);
+    const products = await response.json();
+
+    cart.forEach(cartItem => {
+      const product = products.find(p => p.Id == cartItem.id);
+      if (!product) return;
+
+      const quantity = cartItem.quantity || 1;
+      const itemTotal = parseInt(product.Price || 0) * quantity;
+      subtotal += itemTotal;
+
+      const li = document.createElement('li');
+      li.className = 'cart-item';
+      li.innerHTML = `
+        <img src="${cartItem.image}" alt="${product.Code}">
+        <span>${product.Code || product.Item} x ${quantity} - ₹${itemTotal}</span>
+        <button onclick="removeFromCart('${cartItem.id}', '${cartItem.option || ''}')">❌</button>
+      `;
+      cartItemsContainer.appendChild(li);
+    });
+
+    subtotalEl.innerText = subtotal;
+
+    let discount = 0;
+    if (subtotal > 300) {
+      discount = subtotal * 0.1; // 10% discount
+      discountText.innerText = `🎉 10% discount applied: -₹${discount.toFixed(0)}`;
+    } else {
+      discountText.innerText = '';
+    }
+
+    const total = subtotal - discount;
+    totalEl.innerText = total.toFixed(0);
+    return total;
+
+  } catch (err) {
+    console.error("❌ Error fetching products:", err);
+    alert("Failed to load product info.");
+  }
+}
+
+function removeFromCart(productId, option = '') {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const index = cart.findIndex(item => item.id == productId && (item.option || '') === option);
+  if (index !== -1) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+  }
+}
+
+async function checkout() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+
+  const total = await displayCart();
+  const subtotal = parseFloat(document.getElementById('cartSubtotal').innerText);
+  const discount = subtotal > 300 ? subtotal * 0.1 : 0;
+  const finalTotal = subtotal - discount;
+
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(products => {
+      let message = 'Hello, I want to order:\n\n';
+      cart.forEach(cartItem => {
+        const product = products.find(p => p.Id == cartItem.id);
+        if (product) {
+          message += `${product.Code || product.Item} - ₹${product.Price}\n`;
+        }
+      });
+
+      if (discount > 0) {
+        message += `\nSubtotal: ₹${subtotal}\nDiscount (10%): -₹${discount.toFixed(0)}\n`;
+      }
+      message += `\nFinal Total: ₹${finalTotal.toFixed(0)}\n`;
+
+      window.open(`https://wa.me/+918208952199?text=${encodeURIComponent(message)}`);
+
+      setTimeout(() => {
+        localStorage.removeItem('cart');
+        displayCart();
+      }, 2000);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', displayCart);
+</script>
+</body>
+</html>
