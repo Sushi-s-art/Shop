@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Sushi's Art</title>
+    
+    <meta name="description" content="Meet the creators behind Sushi's Art. A story of passion, creativity, and handmade love.">
+    <meta name="keywords" content="Sushi's Art story, about us, contact sushi's art, handmade business india, creators">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #2EC4B6; --secondary: #FF9F1C; --accent: #9B5DE5; --pop: #FF6B6B; --bg: #FDFFFC; --text: #2F2F2F; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background: var(--bg);
+            background-image: radial-gradient(var(--primary) 2px, transparent 2px), radial-gradient(var(--secondary) 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: var(--text);
+        }
+
+        /* Consistent Header */
+        header {
+          background: white;
+          border-bottom: 5px solid var(--secondary);
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: sticky; 
+          top: 0; 
+          z-index: 1000;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+          font-family: 'Pacifico', cursive;
+          font-size: 2.2rem;
+          color: var(--primary);
+          text-decoration: none;
+          text-shadow: 2px 2px 0 var(--secondary);
+          transition: 0.3s;
+        }
+
+        .logo:hover { 
+          transform: scale(1.05) rotate(-2deg); 
+        }
+
+        nav {
+          display: flex;
+          gap: 1.5rem;
+        }
+
+        nav a {
+          text-decoration: none;
+          color: var(--text);
+          font-family: 'Fredoka', sans-serif;
+          font-weight: 600;
+          font-size: 1.1rem;
+          transition: 0.3s;
+          position: relative;
+        }
+
+        nav a:hover { 
+          color: var(--pop); 
+        }
+
+
+        .container { max-width: 900px; margin: 3rem auto; padding: 2rem; }
+        
+        .story-box { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 3rem; 
+            border: 4px solid var(--primary); 
+            box-shadow: 10px 10px 0 var(--secondary); 
+            margin-bottom: 3rem; 
+            position: relative;
+        }
+        .story-box::before { content: '📖'; font-size: 3rem; position: absolute; top: -30px; left: 20px; background: white; padding: 0 10px; }
+        
+        h1 { font-family: 'Pacifico', cursive; font-size: 3rem; color: var(--primary); text-align: center; margin-bottom: 1.5rem; text-shadow: 1px 1px 0 #eee; }
+        p { font-size: 1.2rem; line-height: 1.8; color: #444; margin-bottom: 1.5rem; }
+
+        .contact-box { 
+            background: var(--text); 
+            color: white; 
+            padding: 2.5rem; 
+            border-radius: 20px; 
+            text-align: center; 
+            border-bottom: 8px solid var(--pop);
+        }
+        .contact-box h2 { color: var(--secondary); font-family: 'Pacifico', cursive; margin-bottom: 1rem; font-size: 2.5rem; }
+        .contact-box p { margin: 0.5rem 0; font-size: 1.1rem; color: #ddd; }
+        
+        .social-btn { 
+            background: #FF0000; 
+            color: white; 
+            padding: 1rem 2rem; 
+            border-radius: 30px; 
+            text-decoration: none; 
+            display: inline-block; 
+            margin-top: 1.5rem; 
+            font-weight: bold; 
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+            transition: 0.3s;
+        }
+        .social-btn:hover { transform: scale(1.1); background: #cc0000; }
+
+        /* Recommendation Section */
+        .rec-section { margin-top: 5rem; text-align: center; }
+        .rec-title { font-family: 'Pacifico', cursive; font-size: 2rem; color: var(--accent); margin-bottom: 2rem; }
+        .rec-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        
+        .mini-card {
+            background: white; width: 220px; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent;
+        }
+        .mini-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .mini-card img { width: 100%; height: 200px; object-fit: cover; }
+        .mini-info { padding: 10px; font-weight: bold; }
+
+        /* Consistent Footer */
+        footer {
+          background: var(--text);
+          color: white;
+          text-align: center;
+          padding: 3rem 1rem;
+          margin-top: auto; /* Pushes footer to bottom if page is short */
+          border-top: 6px solid var(--accent);
+          font-family: 'Fredoka', sans-serif;
+        }
+
+        footer p {
+          margin: 0.5rem 0;
+          font-size: 1rem;
+          letter-spacing: 0.5px;
+        }
+
+        footer a {
+          color: var(--secondary);
+          text-decoration: none;
+          font-weight: bold;
+          transition: 0.3s;
+        }
+
+        footer a:hover {
+          color: var(--primary);
+          text-decoration: underline;
+        }
+
+        .footer-social {
+          margin-top: 1.5rem;
+          padding-top: 1.5rem;
+          border-top: 1px dashed #555;
+          display: flex;
+          justify-content: center;
+          gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Sushi's Art 🎨</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop</a>
+            <a href="About--Us.html" style="color:var(--pop)">About</a>
+            <a href="cart.html">🛒 Cart</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="story-box">
+            <h1>Our Story</h1>
+            <p>Welcome to <strong>Sushi's Art</strong>! 🎨</p>
+            <p>We are passionate about creating unique, hand-designed products that bring a splash of color and joy to your everyday life.</p>
+            <p>What began as a small hobby of making personalized gifts for friends has blossomed into a little shop of wonders. From intricate mandalas to vibrant resin art, every keychain, bookmark, and coaster is crafted with patience, precision, and love.</p>
+        </div>
+
+        <div class="contact-box">
+            <h2>Get in Touch</h2>
+            <p>📞 <strong>Sushrut Phatak:</strong> +91 8202952199</p>
+            <p>📞 <strong>Sneha Phatak:</strong> +91 9420133154</p>
+            <p>📧 Email: <a href="mailto:sushrutpp@gmail.com" style="color:var(--primary);">sushrutpp@gmail.com</a></p>
+            <br>
+            <a href="https://www.youtube.com/@Sushi-s-Art" target="_blank" class="social-btn">📺 Subscribe on YouTube</a>
+        </div>
+
+        <div class="rec-section">
+            <h2 class="rec-title">What we recommend for you</h2>
+            <div class="rec-grid" id="rec-grid">
+                <p>Loading suggestions...</p>
+            </div>
+        </div>
+    </div>
+
+  <footer>
+    <p>Handmade with ❤️ in India.</p>
+    <p>Contact: <a href="mailto:sushrutpp@gmail.com">sushrutpp@gmail.com</a></p>
+    
+    <div class="footer-social">
+        <a href="https://www.youtube.com/@Sushi-s-Art" target="_blank">📺 YouTube</a>
+        <a href="products.html">🛍️ Shop Now</a>
+    </div>
+
+    <p style="font-size: 0.8rem; margin-top: 2rem; opacity: 0.6;">
+        Sushi’s Art. .
+    </p>
+  </footer>
+
+    <script>
+        // Recommendation Logic
+        const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgj7WgnJugRhK-C9lynrEzy94A0bGNTKWqIeUXtc8RALy39Wjpue0zaEfa7hbYbxGMc27bsNLiw-ikQ1v8tjSpeSAYKX6gaHP6GmNOagBJTksXq9iQklS1-13e_DCW_dfTsxQGIWhzlPrxJvuhUpZ1Xh-wq0BaQzIe4hA0OVk2LKIK6KdfbFG7Ykvdz5l9eenbFt9rXFlQqo1G1bs_hlO3zP7pkdJXOqqmIKS-xsoL9bUVMblJh5N2nD6S2MbkhiduTzxBVzdexljxGk7ka00Re1qS4Hg&lib=M49ruvkyrvSQu9MhQ5y1ExChxWcs_ce9J';
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        fetch(apiUrl)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('rec-grid');
+                container.innerHTML = '';
+                
+                // Get 3 random items
+                const picks = shuffleArray(data).slice(0, 3);
+                
+                picks.forEach(p => {
+                    const img = p.Image ? `https://drive.google.com/thumbnail?id=${p.Image.match(/[-\w]{25,}/)?.[0]}&sz=w250` : 'https://via.placeholder.com/250';
+                    
+                    container.innerHTML += `
+                        <a href="detail.html?Id=${p.Code}" class="mini-card">
+                            <img src="${img}" loading="lazy">
+                            <div class="mini-info">
+                                <div>${p.Item}</div>
+                                <div style="color:var(--pop)">₹${p.Price}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>
